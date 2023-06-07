@@ -51,17 +51,18 @@ def opt():
     opt = Optimizer(dimensions=[(0.0, maxr)] * (N * M))
     while True:
         # 迭代优化过程
-        for _ in range(50):
-            # 生成参数建议
-            x = opt.ask()
-            # print(restrain2(x), restrain1(x), x)
-            # 计算目标函数的值
-            y = objective(x)
-            #tq_str = f'output:{-y:.5f}, re1:{restrain1(x):.3f}, re2:{restrain2(x):.3f}, x:{x}'
-            #print(tq_str)
-            # tq.set_postfix_str(tq_str)
-            # 提供参数的评估结果
-            opt.tell(x, y)
+        with tqdm(range(50)) as tq:
+            for _ in tq:
+                # 生成参数建议
+                x = opt.ask()
+                # print(restrain2(x), restrain1(x), x)
+                # 计算目标函数的值
+                y = objective(x)
+                #tq_str = f'output:{-y:.5f}, re1:{restrain1(x):.3f}, re2:{restrain2(x):.3f}, x:{x}'
+                #print(tq_str)
+                # tq.set_postfix_str(tq_str)
+                # 提供参数的评估结果
+                opt.tell(x, y)
 
         # 获取找到的最佳参数
         best_params = opt.ask()
