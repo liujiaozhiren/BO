@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 M = 5
 N = 20
+f = open("output.txt", 'w')
 
 B = np.random.uniform(10, 30, size=(N, M))
 A = np.random.uniform(5, 20, size=(M))
@@ -54,7 +55,7 @@ def restrain2(x_r):
     return ret
 
 
-def noisy_valued(array, noisy_level=0.1):
+def noisy_valued(array, noisy_level=0.5):
     ar = [p + noisy_level * np.random.randn() for p in array]
     for i, item in enumerate(ar):
         if item < 0:
@@ -77,7 +78,6 @@ def opt():
                 # print(restrain2(x), restrain1(x), x)
                 # 计算目标函数的值
                 _x = noisy_valued(x)
-                noisy_valued(_x)
                 y = objective(_x)
                 # tq_str = f'output:{-y:.5f}, re1:{restrain1(x):.3f}, re2:{restrain2(x):.3f}, x:{x}'
                 # print(tq_str)
@@ -90,12 +90,14 @@ def opt():
         # 获取找到的最佳参数
         best_params = ret.x
         tq_str = f'最大值:{-objective(best_params):.5f}, 约束1:{restrain1(best_params):.3f}, 2:{restrain2(best_params):.3f}, 参数:{best_params}'
-        print(tq_str)
+        f.write(tq_str + "\n")
+        f.flush()
         if not restrain1(best_params) > 0 and not restrain2(best_params) > 0 and -objective(best_params) >= max_target:
             break
-    print("最佳参数:", best_params)
-    print("最大值:", -objective(best_params))
-    print("约束", restrain2(best_params), restrain1(best_params))
+    f.write(f"================================\n")
+    f.write(f"最佳参数:{best_params}\n")
+    f.write(f"最大值:{-objective(best_params)}\n")
+    f.write(f"约束{restrain2(best_params)}|{restrain1(best_params)}\n")
 
 
 # Press the green button in the gutter to run the script.
