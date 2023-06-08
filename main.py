@@ -91,6 +91,7 @@ def opt():
         best_params = ret.x
         tq_str = f'最大值:{-objective(best_params):.5f}, 约束1:{restrain1(best_params):.3f}, 2:{restrain2(best_params):.3f}, 参数:{best_params}'
         f.write(tq_str + "\n")
+        print(tq_str)
         f.flush()
         if not restrain1(best_params) > 0 and not restrain2(best_params) > 0 and -objective(best_params) >= max_target:
             break
@@ -98,7 +99,10 @@ def opt():
     f.write(f"最佳参数:{best_params}\n")
     f.write(f"最大值:{-objective(best_params)}\n")
     f.write(f"约束{restrain2(best_params)}|{restrain1(best_params)}\n")
-
+    print(f"================================\n")
+    print(f"最佳参数:{best_params}\n")
+    print(f"最大值:{-objective(best_params)}\n")
+    print(f"约束{restrain2(best_params)}|{restrain1(best_params)}\n")
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
