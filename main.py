@@ -24,7 +24,7 @@ maxr = min(d.max(), v.max())
 # MaxB_A = b_a.max() * 2
 # maxr = min(d.max(), v.max())
 max_target = 0.0
-print(MaxB_A,maxr, "\nD:", d, "\nV:", v, "\nB-A", b_a)
+print(MaxB_A, maxr, "\nD:", d, "\nV:", v, "\nB-A", b_a)
 
 
 # 目标函数
@@ -69,9 +69,9 @@ def opt():
     global max_target
     # 创建优化器
     opt = Optimizer(dimensions=[(0.0, maxr)] * (N * M))
-    while True:
+    for epoch in range(1000000):
         # 迭代优化过程
-        with tqdm(range(10)) as tq:
+        with tqdm(range(10), f"epoch_{epoch}") as tq:
             for _ in tq:
                 # 生成参数建议
                 x = opt.ask()
@@ -104,6 +104,7 @@ def opt():
     print(f"最大值:{-objective(best_params)}\n")
     print(f"约束{restrain2(best_params)}|{restrain1(best_params)}\n")
     print(MaxB_A, maxr, "\nD:", d, "\nV:", v, "\nB-A", b_a)
+
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
