@@ -67,6 +67,7 @@ def noisy_valued(array, noisy_level=0.5):
 
 def opt():
     global max_target
+    patience = 0
     # 创建优化器
     opt = Optimizer(dimensions=[(0.0, maxr)] * (N * M))
     for epoch in range(1000000):
@@ -94,7 +95,9 @@ def opt():
         # print(tq_str)
         f.flush()
         if not restrain1(best_params) > 0 and not restrain2(best_params) > 0 and -objective(best_params) >= max_target:
-            break
+            patience += 1
+            if patience > 5:
+                break
     f.write(f"================================\n")
     f.write(f"最佳参数:{best_params}\n")
     f.write(f"最大值:{-objective(best_params)}\n")
