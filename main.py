@@ -24,7 +24,7 @@ maxr = min(d.max(), v.max())
 # MaxB_A = b_a.max() * 2
 # maxr = min(d.max(), v.max())
 max_target = 0.0
-print(d, v, MaxB_A, maxr)
+print(MaxB_A,maxr, "\nD:", d, "\nV:", v, "\nB-A", b_a)
 
 
 # 目标函数
@@ -91,7 +91,7 @@ def opt():
         best_params = ret.x
         tq_str = f'最大值:{-objective(best_params):.5f}, 约束1:{restrain1(best_params):.3f}, 2:{restrain2(best_params):.3f}, 参数:{best_params}'
         f.write(tq_str + "\n")
-        print(tq_str)
+        # print(tq_str)
         f.flush()
         if not restrain1(best_params) > 0 and not restrain2(best_params) > 0 and -objective(best_params) >= max_target:
             break
@@ -103,6 +103,7 @@ def opt():
     print(f"最佳参数:{best_params}\n")
     print(f"最大值:{-objective(best_params)}\n")
     print(f"约束{restrain2(best_params)}|{restrain1(best_params)}\n")
+    print(MaxB_A, maxr, "\nD:", d, "\nV:", v, "\nB-A", b_a)
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
